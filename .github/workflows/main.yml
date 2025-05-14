@@ -23,9 +23,15 @@ jobs:
           username: ${{ secrets.ALIYUN_REGISTRY_USER }}
           password: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
 
+      # ✅ 添加测试登录，帮助你确认用户名和密码是否能登录成功
+      - name: Test Docker Login
+        run: |
+          echo "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}" | docker login ${{ secrets.ALIYUN_REGISTRY }} -u ${{ secrets.ALIYUN_REGISTRY_USER }} --password-stdin
+
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.ALIYUN_REGISTRY }}/rna_baseline_cy/rna_baseline_medicine_cy:latest .
+
       - name: Push Docker image
         run: |
           docker push ${{ secrets.ALIYUN_REGISTRY }}/rna_baseline_cy/rna_baseline_medicine_cy:latest
