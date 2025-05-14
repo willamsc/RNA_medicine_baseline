@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Alibaba Cloud ACR
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-push:
