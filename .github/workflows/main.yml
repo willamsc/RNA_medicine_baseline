@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Alibaba Cloud ACR
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-push:
@@ -12,10 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set DNS for Docker
-        run: |
-          sudo sed -i 's/^#*nameserver.*/nameserver 8.8.8.8/' /etc/resolv.conf
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -30,7 +26,6 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.ALIYUN_REGISTRY }}/rna_baseline_cy/rna_baseline_medicine_cy:latest .
-
       - name: Push Docker image
         run: |
           docker push ${{ secrets.ALIYUN_REGISTRY }}/rna_baseline_cy/rna_baseline_medicine_cy:latest
